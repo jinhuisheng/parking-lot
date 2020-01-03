@@ -1,33 +1,48 @@
+import java.util.HashMap;
+import java.util.Objects;
+import java.util.UUID;
+
 /**
  * @author huisheng.jin
  * @version 2019/12/21.
  */
 public class ParkingLot {
-    private int parkingSpaceNumber;
-    private int takeUpNumber;
+    private int space;
+    private HashMap<String, Car> parkingLotCarList;
 
-    public ParkingLot(int parkingSpaceNumber) {
-        this.parkingSpaceNumber = parkingSpaceNumber;
-        this.takeUpNumber = 0;
+    public ParkingLot(int space) {
+        parkingLotCarList = new HashMap<>();
+        this.space = space;
     }
 
-    public Boolean park() {
-        if (parkingSpaceNumber == takeUpNumber) {
-            return false;
+    public String park(Car car) {
+        if (parkingLotCarList.size() == space) {
+            throw new RuntimeException("车位已满");
         }
-        this.takeUpNumber += 1;
-        return true;
+        String credential = UUID.randomUUID().toString();
+        parkingLotCarList.put(credential, car);
+        return credential;
     }
 
-    public Boolean takeout() {
-        if (takeUpNumber == 0) {
-            return false;
-        }
-        takeUpNumber -= 1;
-        return true;
-    }
 
     Integer getFreeCount() {
-        return parkingSpaceNumber - takeUpNumber;
+        return space - parkingLotCarList.size();
+    }
+
+    boolean hasFree() {
+        return getFreeCount() > 0;
+    }
+
+    boolean isFull() {
+        return getFreeCount() == 0;
+    }
+
+    public Car takeout(String credential) {
+        Car car = parkingLotCarList.get(credential);
+        if (Objects.isNull(car)) {
+            throw new RuntimeException("车已取");
+        }
+        parkingLotCarList.remove(credential);
+        return car;
     }
 }

@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -10,57 +11,43 @@ class ParkingLotTest {
     @Test
     void should_park_success_when_parkingLot_is_empty() {
         ParkingLot parkingLot = new ParkingLot(2);
-        Boolean result = parkingLot.park();
-        assertThat(result).isEqualTo(true);
+        Car car = new Car();
+        String credential = parkingLot.park(car);
+        assertThat(credential).isNotNull();
     }
 
     @Test
     void should_park_success_when_has_parkingSpace() {
         ParkingLot parkingLot = new ParkingLot(2);
-        parkingLot.park();
-        assertThat(parkingLot.park()).isEqualTo(true);
+        parkingLot.park(new Car());
+        String credential = parkingLot.park(new Car());
+        assertThat(credential).isNotNull();
     }
 
     @Test
     void should_park_success_when_has_no_parkingSpace() {
         ParkingLot parkingLot = new ParkingLot(2);
-        parkingLot.park();
-        parkingLot.park();
+        parkingLot.park(new Car());
+        parkingLot.park(new Car());
 
-        Boolean result = parkingLot.park();
-        assertThat(result).isEqualTo(false);
-    }
-
-    @Test
-    void should_takeout_success_when_park_lot_is_empty() {
-        ParkingLot parkingLot = new ParkingLot(2);
-        Boolean result = parkingLot.takeout();
-        assertThat(result).isEqualTo(false);
-    }
-
-    @Test
-    void should_takeout_failure_when_park_lot_takeout_over() {
-        ParkingLot parkingLot = new ParkingLot(2);
-        parkingLot.park();
-        parkingLot.takeout();
-        Boolean result = parkingLot.takeout();
-        assertThat(result).isEqualTo(false);
+        Assertions.assertThrows(RuntimeException.class, () -> parkingLot.park(new Car()), "车位已满");
     }
 
     @Test
     void should_takeout_success_when_park_lot_has_car() {
         ParkingLot parkingLot = new ParkingLot(2);
-        parkingLot.park();
-        assertThat(parkingLot.takeout()).isEqualTo(true);
+        Car parkCar = new Car();
+        String credential = parkingLot.park(parkCar);
+        Car takeOutCar = parkingLot.takeout(credential);
+        assertThat(takeOutCar).isEqualTo(parkCar);
     }
 
     @Test
-    void should_takeout_success_when_park_lot_is_full_car() {
+    void should_takeout_failure_when_park_lot_takeout_over() {
         ParkingLot parkingLot = new ParkingLot(2);
-        parkingLot.park();
-        parkingLot.park();
+        String credential = parkingLot.park(new Car());
+        parkingLot.takeout(credential);
 
-        assertThat(parkingLot.takeout()).isEqualTo(true);
+        Assertions.assertThrows(RuntimeException.class, () -> parkingLot.takeout(credential), "车已取");
     }
-
 }
