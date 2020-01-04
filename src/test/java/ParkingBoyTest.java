@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -11,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * @author huisheng.jin
  * @date 2020/1/4.
  */
-public class ParkingBoyTest {
+class ParkingBoyTest {
 //    @Test
 //    void demo() {
 //        ParkingBoy parkingBoy = new ParkingBoy(Arrays.asList(new ParkingLot(2)));
@@ -93,5 +94,101 @@ public class ParkingBoyTest {
         parkingBoy.park(new Car());
 
         assertThrows(AllParkingLotsFullException.class, () -> parkingBoy.park(new Car()), "所有停车场已满");
+    }
+
+    @Test
+    void should_park_success_order_by_parkingLots_free_count() {
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(4);
+        List<ParkingLot> parkingLotList = Arrays.asList(parkingLot1, parkingLot2);
+        ParkingByFreeCountParkingBoy parkingBoy = new ParkingByFreeCountParkingBoy(parkingLotList);
+
+        parkingBoy.park(new Car());
+        assertThat(parkingLot2.getFreeCount()).isEqualTo(3);
+
+        parkingBoy.park(new Car());
+        assertThat(parkingLot2.getFreeCount()).isEqualTo(2);
+    }
+
+    @Test
+    void should_park_success_order_by_parkingLots_free_count_when_freeCount_equal_by_sequence() {
+        ParkingLot parkingLot1 = new ParkingLot(2);
+        ParkingLot parkingLot2 = new ParkingLot(4);
+        List<ParkingLot> parkingLotList = Arrays.asList(parkingLot1, parkingLot2);
+        ParkingByFreeCountParkingBoy parkingBoy = new ParkingByFreeCountParkingBoy(parkingLotList);
+
+        parkingBoy.park(new Car());
+        assertThat(parkingLot2.getFreeCount()).isEqualTo(3);
+
+        parkingBoy.park(new Car());
+        assertThat(parkingLot2.getFreeCount()).isEqualTo(2);
+
+        parkingBoy.park(new Car());
+        assertThat(parkingLot1.getFreeCount()).isEqualTo(1);
+    }
+
+    @Test
+    void should_park_failure_order_by_parkingLots_free_count_when_all_parkingLots_full() {
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(2);
+        List<ParkingLot> parkingLotList = Arrays.asList(parkingLot1, parkingLot2);
+        ParkingByFreeCountParkingBoy parkingBoy = new ParkingByFreeCountParkingBoy(parkingLotList);
+
+        parkingBoy.park(new Car());
+        assertThat(parkingLot2.getFreeCount()).isEqualTo(1);
+
+        parkingBoy.park(new Car());
+        assertThat(parkingLot1.getFreeCount()).isEqualTo(0);
+
+        parkingBoy.park(new Car());
+        assertThat(parkingLot2.getFreeCount()).isEqualTo(0);
+
+        Assertions.assertThrows(AllParkingLotsFullException.class, () -> parkingBoy.park(new Car()), "所有停车场已满");
+    }
+
+    @Test
+    void should_park_success_order_by_free_rate() {
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(3);
+        ParkingLot parkingLot3 = new ParkingLot(5);
+        List<ParkingLot> parkingLotList = Arrays.asList(parkingLot1, parkingLot2, parkingLot3);
+        ParkingByFreeRateParkingBoy parkingBoy = new ParkingByFreeRateParkingBoy(parkingLotList);
+
+        parkingBoy.park(new Car());
+        assertThat(parkingLot1.getFreeCount()).isEqualTo(0);
+        parkingBoy.park(new Car());
+        assertThat(parkingLot2.getFreeCount()).isEqualTo(2);
+        parkingBoy.park(new Car());
+        assertThat(parkingLot3.getFreeCount()).isEqualTo(4);
+
+        parkingBoy.park(new Car());
+        assertThat(parkingLot3.getFreeCount()).isEqualTo(3);
+    }
+
+    @Test
+    void should_park_fail_order_by_free_rate_when_all_parkingLots_full() {
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(2);
+        ParkingLot parkingLot3 = new ParkingLot(3);
+        List<ParkingLot> parkingLotList = Arrays.asList(parkingLot1, parkingLot2, parkingLot3);
+        ParkingByFreeRateParkingBoy parkingBoy = new ParkingByFreeRateParkingBoy(parkingLotList);
+
+        parkingBoy.park(new Car());
+        assertThat(parkingLot1.getFreeCount()).isEqualTo(0);
+        parkingBoy.park(new Car());
+        assertThat(parkingLot2.getFreeCount()).isEqualTo(1);
+        parkingBoy.park(new Car());
+        assertThat(parkingLot3.getFreeCount()).isEqualTo(2);
+
+        parkingBoy.park(new Car());
+        assertThat(parkingLot3.getFreeCount()).isEqualTo(1);
+
+        parkingBoy.park(new Car());
+        assertThat(parkingLot2.getFreeCount()).isEqualTo(0);
+
+        parkingBoy.park(new Car());
+        assertThat(parkingLot3.getFreeCount()).isEqualTo(0);
+
+        Assertions.assertThrows(AllParkingLotsFullException.class, () -> parkingBoy.park(new Car()), "所有停车场已满");
     }
 }

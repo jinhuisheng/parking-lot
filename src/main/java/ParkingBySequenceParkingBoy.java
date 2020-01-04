@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author huisheng.jin
@@ -14,11 +15,7 @@ public class ParkingBySequenceParkingBoy extends AbstractParkingBoy {
     }
 
     @Override
-    public ParkingLot getFreeParkingLot() {
-        return getNextParkingLot();
-    }
-
-    private ParkingLot getNextParkingLot() {
+    public Optional<ParkingLot> getFreeParkingLot() {
         if (Objects.isNull(previousIndex)) {
             return setPreviousIndexAndGetParkingLot(0);
         }
@@ -32,13 +29,13 @@ public class ParkingBySequenceParkingBoy extends AbstractParkingBoy {
                 return setPreviousIndexAndGetParkingLot(i);
             }
         }
-        throw new AllParkingLotsFullException("所有停车场已满");
+        return Optional.empty();
     }
 
-    private ParkingLot setPreviousIndexAndGetParkingLot(int index) {
+    private Optional<ParkingLot> setPreviousIndexAndGetParkingLot(int index) {
         ParkingLot parkingLot = parkingLotList.get(index);
         previousIndex = index;
-        return parkingLot;
+        return Optional.of(parkingLot);
     }
 
 }

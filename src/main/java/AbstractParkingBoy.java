@@ -1,19 +1,24 @@
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author huisheng.jin
  * @date 2020/1/4.
  */
 public abstract class AbstractParkingBoy {
-    protected List<ParkingLot> parkingLotList;
+    List<ParkingLot> parkingLotList;
 
-    public AbstractParkingBoy(List<ParkingLot> parkingLotList) {
+    AbstractParkingBoy(List<ParkingLot> parkingLotList) {
         this.parkingLotList = parkingLotList;
     }
 
     public String park(Car car) {
-        ParkingLot parkingLot = getFreeParkingLot();
+        ParkingLot parkingLot = getFreeParkingLotInterval();
         return parkingLot.park(car);
+    }
+
+    private ParkingLot getFreeParkingLotInterval() {
+        return getFreeParkingLot().orElseThrow(() -> new AllParkingLotsFullException("所有停车场已满"));
     }
 
     /**
@@ -21,5 +26,5 @@ public abstract class AbstractParkingBoy {
      *
      * @return
      */
-    public abstract ParkingLot getFreeParkingLot();
+    public abstract Optional<ParkingLot> getFreeParkingLot();
 }

@@ -1,16 +1,14 @@
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.assertj.core.api.Java6Assertions.in;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author huisheng.jin
  * @date 2020/1/3.
  */
-public class ParkingLotTest {
+class ParkingLotTest {
     //    @Test
 //    void demo() {
 //        ParkingLot parkingLot = new ParkingLot(2);

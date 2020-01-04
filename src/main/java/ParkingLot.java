@@ -40,4 +40,9 @@ public class ParkingLot {
     public Integer getFreeCount() {
         return capacity - parkingCarList.size();
     }
+
+    float getFreeRate() {
+        return (float) getFreeCount() / (float) capacity;
+    }
+
 }
