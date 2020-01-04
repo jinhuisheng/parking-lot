@@ -32,4 +32,12 @@ public class ParkingLot {
         parkingCarList.remove(credential);
         return car;
     }
+
+    boolean hasFree() {
+        return parkingCarList.size() < capacity;
+    }
+
+    public Integer getFreeCount() {
+        return capacity - parkingCarList.size();
+    }
 }

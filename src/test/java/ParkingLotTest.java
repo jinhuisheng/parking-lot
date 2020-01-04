@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -17,16 +18,21 @@ public class ParkingLotTest {
 //        assertThat(credential).isNotNull();
 //    }
 
+    private ParkingLot parkingLot;
+
+    @BeforeEach
+    void setUp() {
+        parkingLot = new ParkingLot(2);
+    }
+
     @Test
     void should_park_success_when_parking_lot_is_empty() {
-        ParkingLot parkingLot = new ParkingLot(2);
         String credential = parkingLot.park(new Car());
         assertThat(credential).isNotNull();
     }
 
     @Test
     void should_park_success_when_parking_lot_has_capacity() {
-        ParkingLot parkingLot = new ParkingLot(2);
         parkingLot.park(new Car());
         String credential = parkingLot.park(new Car());
         assertThat(credential).isNotNull();
@@ -34,7 +40,6 @@ public class ParkingLotTest {
 
     @Test
     void should_park_success_when_parking_lot_is_full() {
-        ParkingLot parkingLot = new ParkingLot(2);
         parkingLot.park(new Car());
         parkingLot.park(new Car());
 
@@ -43,7 +48,7 @@ public class ParkingLotTest {
 
     @Test
     void should_take_car_success_by_credential() {
-        ParkingLot parkingLot = new ParkingLot(2);
+        parkingLot = new ParkingLot(2);
         Car parkingCar = new Car();
         String credential = parkingLot.park(parkingCar);
         Car takeCar = parkingLot.take(credential);
@@ -53,7 +58,6 @@ public class ParkingLotTest {
 
     @Test
     void should_take_car_failure_by_invalid_credential() {
-        ParkingLot parkingLot = new ParkingLot(2);
         Car parkingCar = new Car();
         String credential = parkingLot.park(parkingCar);
         String invalidCredential = "1111";
@@ -64,7 +68,6 @@ public class ParkingLotTest {
 
     @Test
     void should_take_car_failure_by_same_credential_take_two_times() {
-        ParkingLot parkingLot = new ParkingLot(2);
         Car parkingCar = new Car();
         String credential = parkingLot.park(parkingCar);
         parkingLot.take(credential);
