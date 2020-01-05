@@ -1,10 +1,10 @@
 # parking-lot
 
 ## 需求：
-停车场(Parking Lot)可以停车、取车;
-不同的停车小哥(Parking Boy)能够依次或者按优先级(空置率、空闲车位数)在多个停车
+ * 停车场(Parking Lot)可以停车、取车;
+ * 不同的停车小哥(Parking Boy)能够依次或者按优先级(空置率、空闲车位数)在多个停车
 场中停放车辆;
-停车经理(Parking Manger)指挥多个停车小哥，也可以自己去停车。
+ * 停车经理(Parking Manger)指挥多个停车小哥，也可以自己去停车。
 
 ## 任务分解
 停车场(Parking Lot)：
