@@ -33,7 +33,7 @@ public class ParkingLot {
         return car;
     }
 
-    boolean hasFree() {
+    boolean hasParkingSpace() {
         return parkingCarList.size() < capacity;
     }
 

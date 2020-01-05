@@ -14,7 +14,12 @@ public class ParkingBoy extends AbstractParkingBoy {
     @Override
     public Optional<ParkingLot> getFreeParkingLot() {
         return parkingLotList.stream()
-                .filter(ParkingLot::hasFree)
+                .filter(ParkingLot::hasParkingSpace)
                 .findFirst();
+    }
+
+    protected boolean hasParkingSpace() {
+        return parkingLotList.stream()
+                .anyMatch(ParkingLot::hasParkingSpace);
     }
 }

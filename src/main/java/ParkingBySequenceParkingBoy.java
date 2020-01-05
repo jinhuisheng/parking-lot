@@ -20,12 +20,12 @@ public class ParkingBySequenceParkingBoy extends AbstractParkingBoy {
             return setPreviousIndexAndGetParkingLot(0);
         }
         for (int i = previousIndex + 1; i < parkingLotList.size(); i++) {
-            if (parkingLotList.get(i).hasFree()) {
+            if (parkingLotList.get(i).hasParkingSpace()) {
                 return setPreviousIndexAndGetParkingLot(i);
             }
         }
         for (int i = 0; i < previousIndex + 1; i++) {
-            if (parkingLotList.get(i).hasFree()) {
+            if (parkingLotList.get(i).hasParkingSpace()) {
                 return setPreviousIndexAndGetParkingLot(i);
             }
         }

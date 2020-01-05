@@ -13,9 +13,8 @@ public class ParkingByFreeRateParkingBoy extends AbstractParkingBoy {
     @Override
     public Optional<ParkingLot> getFreeParkingLot() {
         return parkingLotList.stream()
-                .filter(ParkingLot::hasFree)
-                .sorted(this::compare)
-                .findFirst();
+                .filter(ParkingLot::hasParkingSpace)
+                .min(this::compare);
     }
 
     private int compare(ParkingLot a, ParkingLot b) {

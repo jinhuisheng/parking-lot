@@ -49,7 +49,7 @@ class ParkingBoyTest {
     }
 
     @Test
-    void should_park_success_order_by_parkingLots_sequence() {
+    void should_park_success_order_by_parking_lots_sequence() {
         ParkingLot parkingLot1 = new ParkingLot(2);
         ParkingLot parkingLot2 = new ParkingLot(2);
         List<ParkingLot> parkingLotList = Arrays.asList(parkingLot1, parkingLot2);
@@ -69,7 +69,7 @@ class ParkingBoyTest {
     }
 
     @Test
-    void should_park_failure_order_by_parkingLots_sequence_skip_full_parkingLot() {
+    void should_park_failure_order_by_parking_lots_sequence_skip_full_parking_lot() {
         ParkingLot parkingLot1 = new ParkingLot(1);
         ParkingLot parkingLot2 = new ParkingLot(3);
         List<ParkingLot> parkingLotList = Arrays.asList(parkingLot1, parkingLot2);
@@ -82,7 +82,7 @@ class ParkingBoyTest {
     }
 
     @Test
-    void should_park_failure_order_by_parkingLots_sequence_when_all_parkingLots_full() {
+    void should_park_failure_order_by_parking_lots_sequence_when_all_parking_lots_full() {
         ParkingLot parkingLot1 = new ParkingLot(2);
         ParkingLot parkingLot2 = new ParkingLot(2);
         List<ParkingLot> parkingLotList = Arrays.asList(parkingLot1, parkingLot2);
@@ -97,7 +97,7 @@ class ParkingBoyTest {
     }
 
     @Test
-    void should_park_success_order_by_parkingLots_free_count() {
+    void should_park_success_order_by_parking_lots_free_count() {
         ParkingLot parkingLot1 = new ParkingLot(1);
         ParkingLot parkingLot2 = new ParkingLot(4);
         List<ParkingLot> parkingLotList = Arrays.asList(parkingLot1, parkingLot2);
@@ -111,7 +111,7 @@ class ParkingBoyTest {
     }
 
     @Test
-    void should_park_success_order_by_parkingLots_free_count_when_freeCount_equal_by_sequence() {
+    void should_park_success_order_by_parking_lots_free_count_when_free_count_equal_by_sequence() {
         ParkingLot parkingLot1 = new ParkingLot(2);
         ParkingLot parkingLot2 = new ParkingLot(4);
         List<ParkingLot> parkingLotList = Arrays.asList(parkingLot1, parkingLot2);
@@ -128,7 +128,7 @@ class ParkingBoyTest {
     }
 
     @Test
-    void should_park_failure_order_by_parkingLots_free_count_when_all_parkingLots_full() {
+    void should_park_failure_order_by_parking_lots_free_count_when_all_parking_lots_full() {
         ParkingLot parkingLot1 = new ParkingLot(1);
         ParkingLot parkingLot2 = new ParkingLot(2);
         List<ParkingLot> parkingLotList = Arrays.asList(parkingLot1, parkingLot2);
@@ -166,7 +166,7 @@ class ParkingBoyTest {
     }
 
     @Test
-    void should_park_fail_order_by_free_rate_when_all_parkingLots_full() {
+    void should_park_fail_order_by_free_rate_when_all_parking_lots_full() {
         ParkingLot parkingLot1 = new ParkingLot(1);
         ParkingLot parkingLot2 = new ParkingLot(2);
         ParkingLot parkingLot3 = new ParkingLot(3);
